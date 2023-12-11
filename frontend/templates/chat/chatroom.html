@@ -1,0 +1,143 @@
+{% extends 'chat/base.html' %}
+{% load static %}
+{% block title %}
+    WhatsApp Chat Room | {{ chat_room.name }}
+{% endblock %}
+
+{% block content %}
+    <style>
+        .message {
+            margin-bottom: 10px;
+            word-wrap: break-word;
+            max-width: 70%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .own-message {
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        .message-body {
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+            word-break: break-all;
+            background-color: #DCF8C6;
+            color: #128C7E;
+        }
+
+        .attachment-img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 5px;
+        }
+
+        #chat-area {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #25D366;
+            border-bottom: none;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            color: white;
+        }
+
+        #message-input {
+            border-radius: 10px;
+            resize: none;
+        }
+
+        #file-input {
+            border-radius: 10px;
+        }
+
+        #send-button {
+            border-radius: 10px;
+            background-color: #25D366;
+            color: white;
+            border: none;
+        }
+
+        #send-button:hover {
+            background-color: #128C7E;
+        }
+    </style>
+
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">WhatsApp Chat Room | {{ chat_room.name }}</h5>
+            </div>
+            <div class="card-body">
+                <div id="chat-area" class="d-flex flex-column overflow-auto">
+                    <!-- Individual chat messages will be displayed here -->
+                    {% for message in room_messages %}
+                        {% if message.sender.email == user.email %}
+                            <div class="message own-message">
+                                <div class="text-muted">You</div>
+                                
+                                <div class="message-body">
+                                    {{ message.content }}
+                                    {% if message.attachment %}
+                                        <img src="{{ message.attachment.url }}" alt="Attachment" class="attachment-img">
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="message">
+                                <div class="text-muted">{{ message.sender }}</div>
+                                <div class="message-body">
+                                    {{ message.content }}
+                                    {% if message.attachment %}
+                                        <img src="{{ message.attachment.url }}" alt="Attachment" class="attachment-img">
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="mt-3">
+                    <textarea id="message-input" class="form-control" placeholder="Type your message..."></textarea>
+                    <input type="file" id="file-input" class="form-control mt-2" accept="image/*">
+                    <button id="send-button" class="btn mt-2">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <template id="message-template">
+        <div class="message">
+            <div class="text-muted tmplt-sender-name"></div>
+            <div class="message-body">
+                <div class="tmplt-message-body"></div>
+                    <img id="tmplt-img" src="" alt="Attachment" class="attachment-img">
+            </div>
+        </div>
+    </template>
+
+    {{ request.user.email|json_script:"user_username" }}
+    {{ chat_room.id|json_script:"room-id" }}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Include your custom JavaScript -->
+    <script src="{% static 'js/messaging.js' %}"></script>
+{% endblock %}

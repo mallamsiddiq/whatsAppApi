@@ -1,0 +1,27 @@
+/* styles.css */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+/* Custom class for a darker blue background */
+.bg-custom-blue {
+    background-color: #001f3f; /* Adjust the color code to your preference */
+    color: #ffffff; /* Set text color to light for better readability */
+}
+
+
+/* Custom color for links on hover */
+.list-group-item a:hover {
+    color: #007BFF; /* Adjust the color code to your preference */
+    text-decoration: none; /* Remove underline on hover if needed */
+}
+
+a:hover{
+    color: red;
+}

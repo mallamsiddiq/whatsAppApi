@@ -1,0 +1,17 @@
+<!-- chat/index.html -->
+{% extends 'chat/base.html' %}
+
+{% block title %}Chat Rooms{% endblock %}
+
+{% block content %}
+    <h1 class="mb-4">Chat Rooms</h1>
+    <ul class="list-group">
+        {% for chat_room in chat_rooms %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'chat-room-inside' pk=chat_room.id %}" class="text-decoration-none">{{ chat_room.name }}</a>
+                <button type="button" class="btn btn-primary" onclick="joinRoom({{ chat_room.id }})">Join</button>
+            </li>
+        {% endfor %}
+    </ul>
+    <!-- Add any additional content or components here -->
+{% endblock %}
