@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const roomID = JSON.parse(document.getElementById('room-id').textContent);
 
     // const socket = new WebSocket(`ws://${window.location.host}/ws/chat/${roomID}/?token=${'1234567890vgty'}`)
-    const socket = new WebSocket(`ws://${window.location.host}/ws/chat/${roomID}/`);
+    const socket = new WebSocket(`wss://${window.location.host}/ws/chat/${roomID}/`);
     // const socket = new WebSocket(`ws://${window.location.host}/ws/chat/${roomID}/`, [
     //     'authorization', 'Bearer', '1234567890vgty',
     // ]);
