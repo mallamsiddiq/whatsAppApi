@@ -15,4 +15,4 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 # CMD gunicorn core.wsgi:application --bind 0.0.0.0:$PORT
-CMD daphne -b 0.0.0.0 -p 8001 myproject.asgi:application
+CMD daphne core.asgi:application --bind 0.0.0.0:$PORT
