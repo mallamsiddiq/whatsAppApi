@@ -182,10 +182,9 @@ CHANNEL_LAYERS = {
     },
 }
 
-
-
-
-
+LOGIN_REDIRECT_URL='/home'
+LOGIN_URL = 'login'
+LOGOUT_REDIRECT_URL = 'login'
 
 if config('PRODUCTION', default = None):
     django_heroku.settings(locals())
