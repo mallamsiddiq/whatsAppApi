@@ -41,6 +41,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     data.attachment = e.target.result.split(",")[1]; // Base64-encoded file data
                     sendMessage(data);
                 };
+                reader.onload = function (e) {
+                    data.attachment = {
+                        data: e.target.result.split(",")[1], // Base64-encoded file data
+                        type: file.type, // MIME type of the file
+                        name: file.name, // Original file name
+                    };
+                    sendMessage(data);
+                };
                 reader.readAsDataURL(file);
             } else {
                 sendMessage(data);

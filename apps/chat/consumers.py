@@ -18,6 +18,7 @@ from django.shortcuts import get_object_or_404
 class IsUserAndInRoom:
     def check_auth(self):
         # authentication logic here
+        print("Authenticating")
         if not self.user.is_authenticated or not self.chat_room.user_in_room(self.user.id):
             self.close()  # Disconnect the WebSocket if not authenticated
             return
@@ -62,11 +63,8 @@ class ChatRoomConsumer(IsUserAndInRoom, WebsocketConsumer):
             return_dict,
         )
 
-    # Import necessary modules
-
-    # Update the `handle_message` method in ChatRoomConsumer
     def handle_message(self, data):
-        message, attachment = data.get("message"), data.get("attachment")
+        message, attachment = data.get("message", ''), data.get("attachment")
 
         if message or attachment:
             # Save the message to the database
@@ -78,8 +76,8 @@ class ChatRoomConsumer(IsUserAndInRoom, WebsocketConsumer):
 
             # Handle file attachment, if any
             if attachment:
-                file_data = base64.b64decode(attachment)
-                file_name = f"{secrets.token_urlsafe(10)}.png"
+                file_data = base64.b64decode(attachment['data'])
+                file_name = f"{secrets.token_urlsafe(10)}_{attachment['name']}"
                 file_path = default_storage.save(file_name, ContentFile(file_data))
                 _message.attachment.name = file_path
                 _message.save()
@@ -89,6 +87,7 @@ class ChatRoomConsumer(IsUserAndInRoom, WebsocketConsumer):
             return serializer.data
 
         return {"error": "empty"}
+
 
 
 
