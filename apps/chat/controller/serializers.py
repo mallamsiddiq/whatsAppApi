@@ -7,7 +7,7 @@ from chat.entity.models import ChatRoom, Message, DirectMessage, GroupMessage, G
 
 User = get_user_model()
 
-class UserSerializer(serializers.ModelSerializer):
+class RoomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'email']
@@ -38,7 +38,7 @@ class GroupMessageSerializer(serializers.ModelSerializer):
 
 
 class ChatRoomDetailSerializer(serializers.ModelSerializer):
-    members = UserSerializer(many=True, read_only = True)
+    members = RoomUserSerializer(many=True, read_only = True)
     group_messages = serializers.SerializerMethodField(method_name='get_group_messages')
 
     class Meta:

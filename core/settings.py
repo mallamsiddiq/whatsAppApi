@@ -42,12 +42,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+
     
     # 3rd party modules
     'channels',
     'rest_framework',
     'oauth2_provider',
     'corsheaders',
+
+    'drf_yasg',
 
     # storages
     'cloudinary_storage',
