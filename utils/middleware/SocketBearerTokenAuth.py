@@ -27,6 +27,7 @@ class TokenAuthMiddleware(BaseMiddleware):
         headers = scope.get('headers')
         if headers:
             headers = dict(headers)
+            print(headers)
             if headers.get(b'sec-websocket-protocol') and b'authorization' in headers[b'sec-websocket-protocol']:
                 _, token_name, token_key = headers[b'sec-websocket-protocol'].decode().split(',')
                 if token_name.strip() in {'Token', 'Bearer'}:

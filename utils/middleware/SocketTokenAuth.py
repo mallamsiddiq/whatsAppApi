@@ -6,13 +6,12 @@ from channels.auth import AuthMiddlewareStack
 
 @database_sync_to_async
 def get_user(token_key):
-    try:
-        access_token = AccessToken.objects.get(token=token_key)
-        print(access_token.user, "starting")
+    access_token = AccessToken.objects.filter(token=token_key).first()
+
+    if access_token and access_token.user:
         return access_token.user
-    except AccessToken.DoesNotExist:
-        print('Invalid Token:', token_key)
-        return AnonymousUser()
+
+    return AnonymousUser()
 
 class TokenAuthMiddleware:
     def __init__(self, app):

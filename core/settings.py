@@ -26,7 +26,7 @@ DEBUG=config('DEBUG', cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 
-CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv())
+# CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv())
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True 
 
@@ -192,3 +192,13 @@ LOGOUT_REDIRECT_URL = 'login'
 
 if config('PRODUCTION', default = None):
     django_heroku.settings(locals())
+
+# Use the test channel layers during testing
+if 'test' in sys.argv:
+    TEST_CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        },
+    }
+    print("ooooooohhhhhhh we are testing")
+    CHANNEL_LAYERS = TEST_CHANNEL_LAYERS

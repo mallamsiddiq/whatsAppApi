@@ -101,9 +101,3 @@ class ChatRoomConsumer(IsUserAndInRoom, WebsocketConsumer):
                 event['payload']
             )
         )
-        
-
-
-
-
-
