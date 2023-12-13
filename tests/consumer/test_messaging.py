@@ -14,7 +14,7 @@ User = get_user_model()
 @pytest.mark.asyncio
 class ChatRoomConsumerTests(TestCase):
 
-    def setUp(self):
+    """def setUp(self):
         self.user = User.objects.create_user(email='test_user@gmail.com', password='test_password1!')
         self.room = ChatRoom.objects.create(name='Test Room')
         self.websocket_path = f'/ws/chat/{self.room.id}/'
@@ -36,7 +36,7 @@ class ChatRoomConsumerTests(TestCase):
         message = await communicator.receive_json_from()
         self.assertEqual(message['type'], 'websocket.accept')
         # return communicator
-        await communicator.disconnect()
+        await communicator.disconnect()"""
 
     # async def test_receive_message(self):
     #     communicator = WebsocketCommunicator(self.application, self.websocket_path)

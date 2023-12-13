@@ -3,7 +3,7 @@ from oauth2_provider.models import Application, AccessToken
 from django.urls import reverse
 from django.utils import timezone
 
-from tests import User
+from . import User
 
 class RefreshTokenTests(TestCase):
     def setUp(self):

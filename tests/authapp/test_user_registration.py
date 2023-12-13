@@ -2,7 +2,7 @@
 from django.test import TestCase
 from rest_framework.test import APIClient
 from rest_framework import status
-from tests import User
+from . import User
 
 class RegistrationAPITest(TestCase):
     def setUp(self):

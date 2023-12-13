@@ -25,8 +25,7 @@ class EnterChatRoomViewTest(TestCase):
         new_chat_room = ChatRoom.objects.create(name='Room 2')
 
         # Make a PATCH request to enter the new chat room
-        response = self.client.patch(f'/api/chatrooms/{self.chat_room.id}/enter/')
-        print(response.data)
+        response = self.client.patch(f'/api/chatrooms/{new_chat_room.id}/enter/')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(new_chat_room.members.filter(id=self.user.id).exists())

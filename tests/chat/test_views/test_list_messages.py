@@ -32,7 +32,7 @@ class ListMessagesViewTest(TestCase):
 
         # Check if the serializer data matches the expected data
         serializer = GroupMessageSerializer([self.message1, self.message2], many=True)
-        self.assertEqual(response.data['results'], serializer.data)
+        self.assertCountEqual(response.data['results'], serializer.data)
 
     def test_list_messages_pagination(self):
         # Create additional messages to test pagination

@@ -72,11 +72,12 @@ class ChatRoomListCreateViewTest(TestCase):
         response = self.client.get('/api/chatrooms/')
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 2)
+        
+        self.assertEqual(len(response.data['results']), 2)
         self.assertEqual(ChatRoom.objects.count(), 3)
 
 
         # Validate that the listed chat rooms are the ones the user is a member of
             
-        self.assertEqual(response.data[0]['id'], chat_room_1.id)
-        self.assertEqual(response.data[1]['id'], chat_room_2.id)
+        self.assertEqual(response.data['results'][0]['id'], chat_room_1.id)
+        self.assertEqual(response.data['results'][1]['id'], chat_room_2.id)

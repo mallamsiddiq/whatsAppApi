@@ -200,5 +200,9 @@ if 'test' in sys.argv:
             'BACKEND': 'channels.layers.InMemoryChannelLayer',
         },
     }
-    print("ooooooohhhhhhh we are testing")
     CHANNEL_LAYERS = TEST_CHANNEL_LAYERS
+
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / "db.sqlite3_test",
+    }
