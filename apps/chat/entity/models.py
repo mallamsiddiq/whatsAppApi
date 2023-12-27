@@ -2,11 +2,13 @@ from django.db import models
 from django.contrib.auth import get_user_model
 
 from django.core.exceptions import ValidationError
+from django.utils.text import slugify
+
 
 User = get_user_model()
 
 class ChatRoom(models.Model):
-    name = models.CharField(max_length = 255)
+    name = models.CharField(max_length = 255, unique = True)
     members = models.ManyToManyField(User, through = 'GroupMembership', related_name = 'my_groups')
     max_members = models.PositiveIntegerField(default = 10)
     avatar = models.FileField(upload_to = 'rooms/avaters/', null = True, blank = True)
@@ -25,9 +27,13 @@ class ChatRoom(models.Model):
         if self.user_in_room(member_id):
             return False, "User is already a member of this chatroom."
         return True, 'valid'
+    
+    @property
+    def slug_name(self):
+        return slugify(self.name)
 
     def __str__(self) -> str:
-        return self.name
+        return self.name.replace(' ', '-')
     
 class GroupMembership(models.Model):
     class UserPermChoice(models.TextChoices):

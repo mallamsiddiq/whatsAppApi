@@ -1,0 +1,22 @@
+<!-- chat/index.html -->
+{% extends 'chat/base.html' %}
+{% load static %}
+
+
+
+{% block title %}My contacts{% endblock %}
+
+{% block content %}
+    <div class="container pb-5">
+        <h1 class="mb-4">Contacts list</h1>
+        <ul class="list-group">
+            {% for contact in contacts %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'direct-msg-inside' pk=contact.id %}" class="text-decoration-none text-info">{{ contact.email }}</a>
+                    <a  class="btn btn-info theme-colour text-secondary" onclick="joinRoom({{ contact.id }})">Message</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <!-- Add any additional content or components here -->
+    </div>
+{% endblock %}

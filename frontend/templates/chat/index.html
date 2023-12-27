@@ -1,17 +1,111 @@
-<!-- chat/index.html -->
 {% extends 'chat/base.html' %}
+{% load static %}
+{% block title %}
+    Direct Message | {{ recipient.email }}
+{% endblock %}
 
-{% block title %}Chat Rooms{% endblock %}
+{% block otherstyle %}
+    <link rel="stylesheet" href = "{% static '../static/styles/chatroom.css' %}">
+{% endblock %}
 
-{% block content %}
-    <h1 class="mb-4">Chat Rooms</h1>
-    <ul class="list-group">
-        {% for chat_room in chat_rooms %}
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <a href="{% url 'chat-room-inside' pk=chat_room.id %}" class="text-decoration-none">{{ chat_room.name }}</a>
-                <button type="button" class="btn btn-primary" onclick="joinRoom({{ chat_room.id }})">Join</button>
-            </li>
-        {% endfor %}
-    </ul>
-    <!-- Add any additional content or components here -->
+{% block landing %}
+
+<div class="container-fluid pd-0 p-0">
+    <header class="bg-dark text-white text-center py-4">
+        <h1>Converse Like A Pigeon</h1>
+    </header>
+
+    <div class="jumbotron text-white text-center bg-info jumbotron-with-background py-5" 
+                style="background: linear-gradient(rgba(169, 169, 169, 0.5), rgba(69, 19, 169, 0.8)),  url('{% static "images/pictures/screenshot 1.webp" %}'); 
+                background-size: cover; min-height: 300px">
+        <h1 class="display-4">Connect and Chat Anytime, Anywhere</h1>
+        <a href="{% url 'dashboard' %}" class="btn btn-warning btn-lg">Get Started</a>
+    </div>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Key Features</h2>
+        <div class="row mt-5 mt-5">
+            <div class="card-body">
+                    <h3 class="card-title text-info">Real-time Messaging</h3>
+                    <p class="card-text">Chat with your friends in real-time.</p>
+            </div>
+            <div class=" col-md-6">
+                <img src="{% static 'images/pictures/realtime.png' %}" alt="Real-time Messaging" class="card-img-bottom rounded">
+                    
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-4">
+            <div class=" col-md-6 card">
+                <img src="{% static 'images/pictures/group chatting.jpg' %}" alt="Group Chats" class="card-img-bottom rounded">
+            </div>
+            <div class="card-body text-right">
+                <h3 class="card-title text-info">Group Chats</h3>
+                <p class="card-text">Create and join group chats with ease.</p>
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-4">
+            <div class="card-body">
+                    <h3 class="card-title text-info">Media Sharing</h3>
+                    <p class="card-text">Chat with your friends in real-time.</p>
+            </div>
+            <div class=" col-md-6">
+                <img src="{% static 'images/pictures/file transfer.jpg' %}" alt="Media Sharing" class="card-img-bottom rounded">
+            </div>
+        </div>
+
+        <div class="row mt-5 mb-4">
+            <div class=" col-md-6">
+                <img src="{% static 'images/pictures/schedule-conferencing.jpg' %}" alt="Media Sharing" class="card-img-bottom rounded">
+            </div>
+            <div class="card-body text-right">
+                <h3 class="card-title text-info">Video Conferencing</h3>
+                    <p class="card-text">Create and schedule meetings for business needs.</p>
+            </div>
+        </div>
+    </div>
+    <div class="bg-dark text-white text-center py-5">
+        <h2>What Users Are Saying</h2>
+        <p>"This chat app is amazing! I use it every day." - Ape from Uyo</p>
+    </div>
+
+    <div class="container mt-5 text-center">
+        <h2>What we offer</h2>
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <p class="text-info">Seamless protocol</p>
+                <img src="{% static 'images/pictures/realtime.webp' %}" alt="Screenshot 1" class="img-fluid mb-4">
+            </div>
+            <div class="col-md-4">
+                <p class="text-info">Unvavering Security</p>
+                <img src="{% static 'images/pictures/security.png' %}" alt="Screenshot 2" class="img-fluid mb-4">
+            </div>
+            <div class="col-md-4">
+                <p class="text-info">Custom UI</p>
+                <img src="{% static 'images/pictures/screenshot 1.webp' %}" alt="Screenshot 3" class="img-fluid mb-4">
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-light text-center py-5">
+        <h2>How It Works</h2>
+        <p>1. Sign up for an account.</p>
+        <p>2. Join or create a chat room.</p>
+        <p>3. Start chatting with friends!</p>
+        <p>4. Schedule a conference</p>
+        <p>5. and lots more..</p>
+    </div>
+
+    <div class="bg-dark text-white text-center py-5">
+        <h2>Ready to Get Started?</h2>
+        <a href="{% url 'dashboard' %}" class="btn btn-warning btn-lg">Join Now</a>
+    </div>
+
+    <div class="bg-dark text-white text-center py-3">
+        <p>&copy; 2023 WeTalk. All rights reserved.</p>
+        <p>Made in Ile-Ife</p>
+    </div>
+
+</div>
 {% endblock %}

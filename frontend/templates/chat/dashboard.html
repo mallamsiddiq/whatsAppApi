@@ -1,0 +1,77 @@
+<!-- chat/index.html -->
+{% extends 'chat/base.html' %}
+
+{% block title %}Chat Rooms{% endblock %}
+
+{% block landing %}
+    <div class="container-fluid px-4 pb-5"
+        style="background: linear-gradient(rgba(169, 169, 169, 0.5), rgba(69, 19, 169, 0.8))">
+        
+        <header class="bg-dark text-white p-4 my-4">
+            <h3>Hello, {{user}}.</h3>
+            <span>We are confident, you will love it here</span>
+        </header>
+
+
+        <div class="row">
+            <div class="col-md-4 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Contacts</h5>
+                        <p class="card-text">View Your contacts and start connecting.</p>
+                        <a href="{% url 'my-contacts' %}" class="btn btn-info theme-colour">---></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Personal Rooms</h5>
+                        <p class="card-text">List rooms you're a memmber of, and begin sharing</p>
+                        <a href="{% url 'my-rooms' %}" class="btn btn-info theme-colour">--></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Conferencing</h5>
+                        <p class="card-text">schedule a meeting for your teams here</p>
+                        <a href="#" class="btn btn-info theme-colour">--></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Upgrade Your Plan</h5>
+                        <p class="card-text">Subscribe to access more Features</p>
+                        <a href="#" class="btn btn-info theme-colour">---></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Personal Rooms</h5>
+                        <p class="card-text">Description of what this feature does.</p>
+                        <a href="#" class="btn btn-info theme-colour">--></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mt-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Conferencing</h5>
+                        <p class="card-text">Description of what this feature does.</p>
+                        <a href="#" class="btn btn-info theme-colour">--></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

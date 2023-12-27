@@ -49,9 +49,9 @@ class LoginView(LoginView):
     template_name = 'authapp/login.html'
     success_url = reverse_lazy('home')
 
-    def get_success_url(self):
+    def get_default_redirect_url(self):
         redirect_url = self.request.GET.get('next', self.success_url)
-        
+        print('----99900----', redirect_url)
         return redirect_url
 
 

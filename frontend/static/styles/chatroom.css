@@ -5,7 +5,7 @@ body {
     padding: 0;
     background-color: #f0f0f0;
 }
-
+/* 
 #chat-container {
     max-width: 600px;
     margin: 20px auto;
@@ -25,7 +25,7 @@ body {
 
 #conversation-list {
     overflow-y: auto;
-    /* max-height: 400px; */
+    max-height: 400px;
     padding: 10px;
 }
 
@@ -85,4 +85,79 @@ body {
 img.attachment-img{
     max-height: 20px;
     width: 20px;
-}
+} */
+
+
+.message {
+            margin-bottom: 10px;
+            word-wrap: break-word;
+            max-width: 70%;
+            display: flex;
+            flex-direction: column;
+            background-color: #e1ffc7;
+        }
+
+        .own-message {
+            align-self: flex-end;
+            text-align: right;
+        }
+
+        .message-body {
+            padding: 10px;
+            border-radius: 10px;
+            display: inline-block;
+            word-break: break-all;
+            background-color: #DCF8C6;
+            color: #128C7E;
+        }
+
+        .attachment-img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 5px;
+        }
+
+        #chat-area {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 15px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: #25D366;
+            border-bottom: none;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            padding: 15px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            color: white;
+        }
+
+        #message-input {
+            border-radius: 10px;
+            resize: none;
+        }
+
+        #file-input {
+            border-radius: 10px;
+        }
+
+        #send-button {
+            border-radius: 10px;
+            background-color: #25D366;
+            color: white;
+            border: none;
+        }
+
+        #send-button:hover {
+            background-color: #128C7E;
+        }

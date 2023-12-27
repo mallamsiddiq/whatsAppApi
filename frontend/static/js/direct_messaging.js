@@ -1,11 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
     const user_username = JSON.parse(document.getElementById('user_username').textContent);
-    const roomID = JSON.parse(document.getElementById('room-id').textContent);
+    const recipientId = JSON.parse(document.getElementById('recipient-id').textContent);
  
     // Check if the current environment is secure (HTTPS)
     const ws_protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
     // open connection
-    const socket = new WebSocket(`${ws_protocol}://${window.location.host}/ws/chat-room/${roomID}/`);
+    const socket = new WebSocket(`${ws_protocol}://${window.location.host}/ws/chat-direct/${recipientId}/`);
 
     socket.addEventListener("open", (event) => {
         console.log("WebSocket connection opened:");

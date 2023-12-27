@@ -12,8 +12,14 @@ main {
 /* Custom class for a darker blue background */
 .bg-custom-blue {
     background-color: #001f3f; /* Adjust the color code to your preference */
-    color: #ffffff; /* Set text color to light for better readability */
+    color: #d0c6c6; /* Set text color to light for better readability */
 }
+
+.theme-colour {
+    background-color: #001f3f; /* Adjust the color code to your preference */
+    color: #ada1a1; /* Set text color to light for better readability */
+}
+
 
 
 /* Custom color for links on hover */
@@ -25,3 +31,11 @@ main {
 a:hover{
     color: red;
 }
+
+div.jumbotron-with-background {
+    background-image: url('{% static "images/pictures/conferencing.webp" %}');
+    background-size: cover;
+}
+
+
+/* url('{% static "images/pictures/conferencing.webp" %}') */

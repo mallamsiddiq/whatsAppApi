@@ -3,7 +3,7 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
 
-from chat.entity.models import ChatRoom, Message, DirectMessage, GroupMessage, GroupMembership
+from chat.entity.models import ChatRoom, DirectMessage, GroupMessage, GroupMembership
 
 User = get_user_model()
 
@@ -55,5 +55,10 @@ class ChatRoomDetailSerializer(serializers.ModelSerializer):
         return serializer.data
     
 
+class DirectMessageSerializer(serializers.ModelSerializer):
+    sender = serializers.StringRelatedField()
+    recipient = serializers.StringRelatedField()
 
-
+    class Meta:
+        model = DirectMessage
+        fields = '__all__'

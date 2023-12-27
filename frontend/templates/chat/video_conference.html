@@ -1,0 +1,22 @@
+<html>
+{% load static %}
+
+<head>
+    <style>
+        #root {
+            width: 98vw;
+            height: 97vh;
+            }
+    </style>
+</head>
+
+
+<body>
+    <div id="root"></div>
+</body>
+{{ request.user.email|json_script:"user_username" }}
+{{ room_name|json_script:"room-name" }}
+<script src="https://unpkg.com/@zegocloud/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+<script src="{% static 'js/vid_conference.js' %}"></script>
+
+</html>

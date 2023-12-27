@@ -12,16 +12,31 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     
     <!-- Link to the external CSS file -->
-    <link rel="stylesheet" href="{% static '../static/styles/base.css' %}">
+    <link rel="stylesheet" href = "{% static '../static/styles/base.css' %}">
+    <!--  Load CSS in Flask with html-->
+
+    {% block otherstyle %}
+    <link rel="stylesheet" href = "{% static '../static/styles/base.css' %}">
+    {% endblock %}
 
     <title>{% block title %}{% endblock %} - Chat App</title>
+
 </head>
 <body>
+
+
     {% include 'chat/navbar.html' %}
 
-    <main class="container-fluid container-fluid mt-4">
-        {% block content %}{% endblock %}
-    </main>
+    {% block landing %}{% endblock %}
+
+    
+    <div class="container-fluid px-4"
+        style="background: linear-gradient(rgba(169, 169, 169, 0.5), rgba(69, 19, 169, 0.8))">
+    {% block content %}
+    {% endblock %}
+    </div>
+
+    
 
     <!-- Add Bootstrap CDN link for JS (if needed) -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>

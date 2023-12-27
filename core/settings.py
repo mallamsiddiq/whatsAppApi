@@ -8,9 +8,6 @@ import django_heroku
 
 import dj_database_url
 
-
-import cloudinary_storage
-
 # import django_heroku
 
 # import dj_database_url
@@ -176,12 +173,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ASGI_APPLICATION = "core.asgi.application"
 
 
-
+# redis layer
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             "hosts": [config('REDIS_URL', default='redis://127.0.0.1:6379')],
+        },
+    },
+}
+
+# rabitt-mq layer 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_rabbitmq.core.RabbitmqChannelLayer",
+        "CONFIG": {
+            "host": config('RABBIT_MQ_URL'),
+            # "ssl_context": ... (optional)
         },
     },
 }
