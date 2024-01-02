@@ -60,6 +60,8 @@ class GroupMembership(models.Model):
 
         super(GroupMembership, self).save(*args, **kwargs)
 
+    
+
     def __str__(self):
         return f"{self.user_perm}, {self.member} in {self.room.name}"
 
@@ -73,9 +75,20 @@ class Message(models.Model):
 
     def __str__(self) -> str:
         return f"{self.content[:25] or (self.attachment and self.attachment.name) } by {self.sender}"
+    
+    class Meta:
+        ordering = ['-timestamp']
 
 class DirectMessage(Message):
     recipient = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'received_direct_messages')
 
+    class Meta:
+        ordering = ['-timestamp']
+
 class GroupMessage(Message):
     chat_room = models.ForeignKey(ChatRoom, on_delete = models.CASCADE, related_name = 'group_messages')
+
+    class Meta:
+        ordering = ['-timestamp']
+        
+        get_latest_by = 'timestamp'

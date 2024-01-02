@@ -3,7 +3,6 @@ from django.urls import path, include
 from . import views as _views 
 from oauth2_provider.views import TokenView, RevokeTokenView, IntrospectTokenView
 
-
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
@@ -12,7 +11,7 @@ urlpatterns = [
     path('my-profile/', _views.ProfileView.as_view(), name='my-profile'),
     path('protected/', _views.ProtectedResourceView.as_view(), name='protected'),
 
-    path('access-token/', TokenView.as_view(), name='access-token'),  # gettoken
+    path('access-token/', _views.GetAccessTokenView.as_view(), name='access-token'),  # gettoken
     path('revoke-token/', RevokeTokenView.as_view(), name='revoke-token'),  # revoketoken
     path('refresh-token/', IntrospectTokenView.as_view(), name='refresh-token'),  # refreshtoken
 

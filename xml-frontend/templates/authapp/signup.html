@@ -1,0 +1,16 @@
+<!-- authapp/templates/authapp/registration.html -->
+{% extends "./login.html" %}
+{% load static %}
+
+{% block title %} SignUp {% endblock %}
+
+
+{% block authheadline %} Create  a {{view.obj_name}} Account {% endblock %} 
+
+{% block buttontext %} SignUp {% endblock %}
+
+
+{% block elsechoice %}
+<p class="text-center mt-3">Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+            
+{% endblock %}

@@ -1,0 +1,58 @@
+<!-- authapp/templates/authapp/login.html -->
+{% extends '../chat/base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <div class="container mt-5 pb-5 opacity-75" >
+        <div class="row justify-content-center">
+            <div class="col-md-6" >
+                <form  method="post" class="card p-4" style="background-color: rgba(255, 255, 255, 0.8)">
+                    {% csrf_token %}
+
+                    <h2 class="text-center mb-4">
+                        {% block authheadline %}
+                        Login
+                        {% endblock %}
+                    </h2>
+
+                    {% for err in form.non_field_errors %}
+                        <div class="text-danger form-error">
+                            {{ err }}
+                        </div>
+                    {% endfor %}
+                    {% for field in form %}
+                        <div class="form-group {% if field.errors %}has-error{% endif %}">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.errors %}
+                                <span class="text-danger form-error">{{ field.errors|join:", " }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+
+                    <button type="submit" class="btn btn-primary btn-block">
+                        {% block buttontext %}
+                            Login
+                        {% endblock %}
+                    </button>
+                </form>
+
+                
+
+                {% block elsechoice %}
+                <p class="text-center mt-3">Don't have an account yet? <a href="{% url 'signup' %}">SignUp here</a></p>
+                            
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            // Add custom styles to form fields and labels
+            $('form .form-group label').addClass('mb-1');
+            $('form .form-group input').addClass('form-control');
+        });
+    </script>
+{% endblock %}

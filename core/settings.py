@@ -1,16 +1,8 @@
 import os, sys
 from pathlib import Path
-
-from decouple import config, Csv
-
 from decouple import config, Csv
 import django_heroku
-
 import dj_database_url
-
-# import django_heroku
-
-# import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,8 +18,6 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
 CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv())
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True 
-
-
 
 
 # Applications definition
@@ -80,7 +70,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'frontend/templates'),
+            os.path.join(BASE_DIR,'xml-frontend/templates'),
             ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -144,6 +134,11 @@ REST_FRAMEWORK = {
 }
 # OAUTH2_PROVIDER = auth_setup.OAUTH2_PROVIDER
 
+# OAUTH2_PROVIDER = {
+#     # other OAUTH2 settings
+#     'OAUTH2_BACKEND_CLASS': 'oauth2_provider.oauth2_backends.JSONOAuthLibCore'
+# }
+
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
@@ -153,7 +148,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'frontend/static'),
+    os.path.join(BASE_DIR,'xml-frontend/static'),
 ]
 
 # media

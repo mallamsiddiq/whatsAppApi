@@ -13,6 +13,11 @@
     
     <!-- Link to the external CSS file -->
     <link rel="stylesheet" href = "{% static '../static/styles/base.css' %}">
+
+    <!-- Add Bootstrap CDN link for JS (if needed) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <!--  Load CSS in Flask with html-->
 
     {% block otherstyle %}
@@ -38,9 +43,21 @@
 
     
 
-    <!-- Add Bootstrap CDN link for JS (if needed) -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    
 </body>
 </html>
+
+{% block otherscripts %}{% endblock %}
+
+<script>
+
+// dissapear pooped messages
+$(document).ready(function() {
+    setTimeout(function() {
+        var messages = $('.alert-message, .form-error');
+
+        // Fade out the message(s) over 1 second
+        messages.fadeOut(1000);
+    }, 3000); // Delay for 3 seconds (3000 milliseconds)
+});
+</script>

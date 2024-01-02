@@ -20,14 +20,6 @@ class GroupMembershipSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ChatRoomListSerializer(serializers.ModelSerializer):
-
-    is_full = serializers.BooleanField(read_only=True)
-    class Meta:
-        model = ChatRoom
-        exclude = ['members']
-    
-
 class GroupMessageSerializer(serializers.ModelSerializer):
     chat_room = serializers.StringRelatedField()
     sender = serializers.StringRelatedField()
@@ -35,7 +27,16 @@ class GroupMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = GroupMessage
         fields = '__all__'
+        
 
+class ChatRoomListSerializer(serializers.ModelSerializer):
+
+    is_full = serializers.BooleanField(read_only=True)
+    latest_message = GroupMessageSerializer(source='group_messages.latest', read_only=True)
+
+    class Meta:
+        model = ChatRoom
+        exclude = ['members']
 
 class ChatRoomDetailSerializer(serializers.ModelSerializer):
     members = RoomUserSerializer(many=True, read_only = True)
@@ -47,7 +48,7 @@ class ChatRoomDetailSerializer(serializers.ModelSerializer):
 
     def get_group_messages(self, obj):
         # Retrieve the latest 30 messages for the chat room
-        latest_messages = obj.group_messages.order_by('-timestamp')[:30]
+        latest_messages = obj.group_messages.order_by('-timestamp')[:30][::-1]
         
         # Serialize the messages using the GroupMessageSerializer
         serializer = GroupMessageSerializer(latest_messages, many=True)

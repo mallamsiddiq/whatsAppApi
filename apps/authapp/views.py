@@ -7,6 +7,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 
+from oauth2_provider.views import TokenView
+
 from . import forms
 
 from .serializers import RegistrationSerializer, UserSerializer, User
@@ -14,6 +16,9 @@ from .serializers import RegistrationSerializer, UserSerializer, User
 class RegistrationView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegistrationSerializer
+
+class GetAccessTokenView(TokenView, APIView):
+    ""
 
 class ProfileView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
@@ -51,7 +56,6 @@ class LoginView(LoginView):
 
     def get_default_redirect_url(self):
         redirect_url = self.request.GET.get('next', self.success_url)
-        print('----99900----', redirect_url)
         return redirect_url
 
 

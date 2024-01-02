@@ -18,8 +18,8 @@ from django.shortcuts import get_object_or_404
 class IsUserAndInRoom:
     def check_auth(self):
         # authentication logic here
-        print("Authenticating")
         if not self.user.is_authenticated or not self.chat_room.user_in_room(self.user.id):
+            print("Access Denied")
             self.close()  # Disconnect the WebSocket if not authenticated
             return
         
