@@ -7,20 +7,17 @@ from channels.generic.websocket import WebsocketConsumer
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.contrib.auth import get_user_model
-
-
 from django.shortcuts import get_object_or_404
 
-from chat.entity.models import DirectMessage
+from chat.entity.models import Conversation, DirectMessage
 from chat.controller.serializers import DirectMessageSerializer
 
 User = get_user_model()
 
 class IsUserAuthenticated:
     def check_auth(self):
-        # authentication logic here
         print("Authenticating")
-        if not self.user.is_authenticated:
+        if not self.user.is_authenticated or self.user == self.recipient:
             self.close()  # Disconnect the WebSocket if not authenticated
             return
         
@@ -29,12 +26,13 @@ class IsUserAuthenticated:
 class DmMessagingConsumer(IsUserAuthenticated, WebsocketConsumer):
     def connect(self):
         self.user = self.scope['user']
-        self.recipient_id = self.scope["url_route"]["kwargs"]["reciepient_id"]
-        self.reciever = get_object_or_404(User, id=int(self.recipient_id))
+        self.recipient_id = self.scope["url_route"]["kwargs"]["recipient_id"]  # Corrected typo
+        self.recipient = get_object_or_404(User, id=int(self.recipient_id))
 
         user_ids = sorted([str(self.user.id), str(self.recipient_id)])
-        self.room_id = f"direct_message__for__{user_ids[0]}__{user_ids[1]}"
-        self.room_group_name = f"chat_{self.room_id}"
+        self.room_id = f"{user_ids[0]}-{user_ids[1]}"
+        self.conversation = self._create_conversation(user_ids)
+        self.room_group_name = f"chat_dm_{self.room_id}"
 
         self.check_auth()
 
@@ -44,6 +42,17 @@ class DmMessagingConsumer(IsUserAuthenticated, WebsocketConsumer):
         )
         self.accept()
 
+    def _create_conversation(self, user_ids, users):
+        
+        # Get or create a conversation between the users
+        conversation, created = Conversation.objects.get_or_create(
+            name = self.room_id
+        )
+        if created:
+            conversation.members.set(users)
+            conversation.save()
+        return conversation
+
     def disconnect(self, close_code):
         # Leave room group
         async_to_sync(self.channel_layer.group_discard)(
@@ -52,7 +61,7 @@ class DmMessagingConsumer(IsUserAuthenticated, WebsocketConsumer):
 
     # Receive message from WebSocket
     def receive(self, text_data=None, bytes_data=None):
-        # parse the json data into dictionary object
+        # Parse the JSON data into a dictionary object
         text_data_json = json.loads(text_data)
 
         payload = self.handle_message(text_data_json)
@@ -68,14 +77,15 @@ class DmMessagingConsumer(IsUserAuthenticated, WebsocketConsumer):
         )
 
     def handle_message(self, data):
-        message, attachment = data.get("message", ''), data.get("attachment")
+        message_body, attachment = data.get("message", ''), data.get("attachment")
 
-        if message or attachment:
+        if message_body or attachment:
             # Save the message to the database
             _message = DirectMessage.objects.create(
                 sender=self.user,
-                content=message,
-                recipient=self.reciever,
+                content=message_body,
+                recipient = self.recipient,
+                conversation=self.conversation  # Associate the message with the conversation
             )
 
             # Handle file attachment, if any
@@ -90,18 +100,10 @@ class DmMessagingConsumer(IsUserAuthenticated, WebsocketConsumer):
             serializer = DirectMessageSerializer(instance=_message)
             return serializer.data
 
-        return {"error": "empty"}
+        return {"error": "Message cannot be empty"}
 
-
-
-
-    # Receive message from room group
     def chat_message(self, event):
-        text_data_json = event.copy()
-        text_data_json.pop("type")
-
+        # Send message from chat to WebSocket
         self.send(
-            text_data=json.dumps(
-                event['payload']
-            )
+            text_data=json.dumps(event['payload'])
         )

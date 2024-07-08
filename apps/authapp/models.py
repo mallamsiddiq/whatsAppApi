@@ -12,6 +12,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     balance = models.FloatField(default = 0)
+    avatar = models.FileField(upload_to = 'users/avatars/', null = True, blank = True)
 
     objects = CustomUserManager()
 

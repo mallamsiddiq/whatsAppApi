@@ -40,7 +40,7 @@ class MyContactsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         # Assuming get_direct_contacts is a method in your User model
-        return self.request.user.get_direct_contacts
+        return self.request.user.conversations.all()
 
 
 class InRoomView(GroupMemberRequiredMixin, DetailView):
