@@ -8,7 +8,7 @@ from channels.generic.websocket import WebsocketConsumer
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 
-from chat.entity.models import GroupMessage, ChatRoom
+from chat.entity.models import Message, ChatRoom
 from chat.controller.serializers import GroupMessageSerializer
 
 from django.shortcuts import get_object_or_404
@@ -64,13 +64,13 @@ class ChatRoomConsumer(IsUserAndInRoom, WebsocketConsumer):
         )
 
     def handle_message(self, data):
-        message, attachment = data.get("message", ''), data.get("attachment")
+        content, attachment = data.get("message", ''), data.get("attachment")
 
-        if message or attachment:
+        if content or attachment:
             # Save the message to the database
-            _message = GroupMessage.objects.create(
+            _message = Message.objects.create(
                 sender=self.user,
-                content=message,
+                content=content,
                 chat_room=self.chat_room,
             )
 
